@@ -1,5 +1,5 @@
 <html>
 <body>
-Hallo Welt
+<a href="/welcome">Klick hier</a>
 </body>
 </html>
