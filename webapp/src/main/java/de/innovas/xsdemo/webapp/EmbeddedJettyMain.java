@@ -1,5 +1,12 @@
 package de.innovas.xsdemo.webapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.tomcat.InstanceManager;
+import org.apache.tomcat.SimpleInstanceManager;
+import org.eclipse.jetty.apache.jsp.JettyJasperInitializer;
+import org.eclipse.jetty.plus.annotation.ContainerInitializer;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.SecureRequestCustomizer;
@@ -9,13 +16,17 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 public class EmbeddedJettyMain {
 
-  public static void main(String[] args) throws Exception {
+  public static void main( String[] args ) throws Exception {
 
     Server server = new Server();
 
     // Creating the web application context
     WebAppContext webapp = new WebAppContext();
     webapp.setResourceBase( "src/main/webapp" );
+    webapp.setContextPath( "/" );
+    webapp.setAttribute( "org.eclipse.jetty.containerInitializers", jspInitializers() );
+    webapp.setAttribute( InstanceManager.class.getName(), new SimpleInstanceManager() );
+
     server.setHandler( webapp );
 
     // HTTP Configuration
@@ -54,5 +65,13 @@ public class EmbeddedJettyMain {
     server.start();
     server.join();
 
+  }
+
+  private static List< ContainerInitializer > jspInitializers() {
+    JettyJasperInitializer sci = new JettyJasperInitializer();
+    ContainerInitializer initializer = new ContainerInitializer( sci, null );
+    List< ContainerInitializer > initializers = new ArrayList< ContainerInitializer >();
+    initializers.add( initializer );
+    return initializers;
   }
 }
