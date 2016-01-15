@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HelloWorldController {
 
-  @RequestMapping( "/" )
-  public String root( Model model, HttpSession session ) {
-
-    Object user = session.getAttribute( "user" );
-    if ( user == null ) {
-      return "redirect:login";
-    }
-    model.addAttribute( "user", user );
-    return "redirect:test";
-  }
+//  @RequestMapping( "/" )
+//  public String root( Model model, HttpSession session ) {
+//
+//    Object user = session.getAttribute( "user" );
+//    if ( user == null ) {
+//      return "redirect:login";
+//    }
+//    model.addAttribute( "user", user );
+//    return "redirect:test";
+//  }
 
   @RequestMapping( "/test" )
   public String helloWorld( Model model, HttpSession session ) {
