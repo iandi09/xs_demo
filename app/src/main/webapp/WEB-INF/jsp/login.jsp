@@ -1,7 +1,7 @@
 <jsp:include page="/WEB-INF/jsp/general/header.jsp" />
 
 <div class="container">
-	<form class="form-signin" action="/j_spring_security_check" method="POST">
+	<form class="form-signin" action="/j_spring_security_check" method="post">
 		<h2 class="form-signin-heading">Please sign in</h2>
 		<label for="inputUsername" class="sr-only">User name</label> 
 		<input type="text" id="inputUsername" class="form-control" name="username"

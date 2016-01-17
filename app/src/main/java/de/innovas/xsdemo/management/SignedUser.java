@@ -13,6 +13,7 @@ public class SignedUser {
 			User user = new User("admin", "admin", true);
 			user.setEmail("admin@xsdemo.de");
 			put("admin", user);
+			put("user", new User("user", "user", false));
 		}
 	};
 

@@ -2,6 +2,8 @@ package de.innovas.xsdemo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,24 +23,49 @@ public class UserManagementController {
 
 	static private final String URL_USER_LIST = "/user_list";
 	static private final String USER_LIST_VIEW = "user_list";
+	
+	static private final String URL_EDIT_USER = "/user_edit";
 
 	@RequestMapping(method = RequestMethod.GET, value = URL_ADD_USER)
-	public String showUserForm(Model model) {
+	public String showUserForm(Model model, HttpSession session) {
 		UserCommand userCommand = new UserCommand();
 		Authentication auth = getAuthentication();
 	    String name = auth.getName();
-	    model.addAttribute("isAdmin", SignedUser.getUser(name).isVip());
+	    setPageParams(model, "user_add", name);
 		model.addAttribute("userCommand", userCommand);
 		return USER_VIEW;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = URL_ADD_USER)
-	public String addUser(Model model, UserCommand userCommand) {
-		User user = new User(userCommand.getUsername(), userCommand.getPassword(), false);
+	@RequestMapping(method = RequestMethod.POST, value = {URL_ADD_USER, URL_EDIT_USER})
+	public String editUser(Model model, UserCommand userCommand) {
+		User user;
+		if(userCommand.isNewUser()) {
+			user = new User(userCommand.getUsername(), userCommand.getPassword(), false);
+		} else {
+			Authentication auth = getAuthentication();
+		    String name = auth.getName();
+			user = SignedUser.getUser(name);
+		}
 		user.setEmail(userCommand.getEmail());
+		user.setInfo(userCommand.getInfo());
 		user.setVip(userCommand.isVip());
 		SignedUser.addUser(user);
 		return "redirect:" + USER_LIST_VIEW;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = URL_EDIT_USER)
+	public String showUserEditForm(Model model) {
+		UserCommand userCommand = new UserCommand();
+		Authentication auth = getAuthentication();
+	    String name = auth.getName();
+	    setPageParams(model, "user_edit", name);
+	    User user = SignedUser.getUser(name);
+	    userCommand.setUsername(name);
+	    userCommand.setEmail(user.getEmail());
+	    userCommand.setInfo(user.getInfo());
+	    userCommand.setVip(user.isVip());
+		model.addAttribute("userCommand", userCommand);
+		return USER_VIEW;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = URL_USER_LIST)
@@ -46,18 +73,18 @@ public class UserManagementController {
 		List<User> userList = SignedUser.getUsers();
 		Authentication auth = getAuthentication();
 	    String name = auth.getName();
-	    model.addAttribute("isAdmin", SignedUser.getUser(name).isVip());
+	    setPageParams(model, "user_list", name);
 		model.addAttribute("userList", userList);
 		return USER_LIST_VIEW;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/test")
-	public String showTest(Model model) {
-
-		return "test";
-	}
-	
 	private Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();
+	}
+	
+	private void setPageParams(Model model, String currentPage, String currentUser) {
+		model.addAttribute("isAdmin", SignedUser.getUser(currentUser).isVip());
+	    model.addAttribute("page", currentPage);
+	    model.addAttribute("username", currentUser);
 	}
 }

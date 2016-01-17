@@ -7,6 +7,8 @@ public class User {
 	private String name;
 	private String preName;
 	private String email;
+	private String info;
+
 	private boolean vip;
 	
 	public User(String username, String password, boolean vip) {
@@ -44,6 +46,12 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
 	}
 	public boolean isVip() {
 		return vip;
