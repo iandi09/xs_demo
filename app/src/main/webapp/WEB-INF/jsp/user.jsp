@@ -3,8 +3,10 @@
 
 <jsp:include page="/WEB-INF/jsp/general/header.jsp" />
 
+<c:set var="currentUrl" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+
 <c:choose>
-	<c:when test="${page == 'user_add'}">
+	<c:when test="${currentUrl == '/user_add'}">
 		<c:set var="title" value="Neuer Benutzer" />
 		<c:set var="button" value="Anlegen" />
 	</c:when>

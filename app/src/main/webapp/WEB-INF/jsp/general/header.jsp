@@ -19,10 +19,11 @@
 
 <body>
 
+<c:set var="currentUrl" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+
 <form action="/j_spring_security_logout" method="post" id="logoutForm">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
-
 
 <nav class="navbar navbar-inverse">
 	<div class="container">
@@ -33,15 +34,15 @@
 					<a class="navbar-brand" href="/home">XS Demo</a>
 				</li>
 				<c:if test="${!loggedIn}">
-				<li <c:if test="${page == 'user_list'}">class="active"</c:if>>
+				<li <c:if test="${currentUrl == '/user_list'}">class="active"</c:if>>
 					<a href="/user_list">Benutzerliste</a>
 				</li>
-				<li <c:if test="${page == 'user_edit'}">class="active"</c:if>>
+				<li <c:if test="${currentUrl == '/user_edit'}">class="active"</c:if>>
 					<a href="/user_edit">Benutzerdaten ändern</a>
 				</li>
 				<c:if test="${isAdmin}">
-				<li <c:if test="${page == 'user_add'}">class="active"</c:if>>
-					<a href="/add_user">Benutzer anlegen</a>
+				<li <c:if test="${currentUrl == '/user_add'}">class="active"</c:if>>
+					<a href="/user_add">Benutzer anlegen</a>
 				</li>
 				</c:if>
 				<li style="position:absolute; right:100px;;">

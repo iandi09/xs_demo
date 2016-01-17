@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import de.innovas.xsdemo.management.SignedUser;
 
@@ -13,6 +14,7 @@ import de.innovas.xsdemo.management.SignedUser;
 public class LoginController {
 
 	static private final String ROOT = "/";
+	
 	static private final String URL_LOGIN = "/login";
 	static private final String LOGIN_VIEW = "login";
 	
@@ -24,9 +26,9 @@ public class LoginController {
 	public String redirectToLogin(Model model) {
 		Authentication auth = getAuthentication();
 		if (!auth.isAuthenticated()){
-			return "redirect:" + LOGIN_VIEW;
+			return "redirect:" + URL_LOGIN;
 		} else {
-			return "redirect:" + HOME_VIEW;
+			return "redirect:" + URL_HOME;
 		}
 	}
 	
@@ -38,9 +40,16 @@ public class LoginController {
 	}
 	
 	@RequestMapping( method=RequestMethod.GET ,value = URL_HOME)
-	public String showHome(Model model) {
+	public String showHome(Model model, @RequestParam(value="q", required=false) String query) {
 		Authentication auth = getAuthentication();
 	    String name = auth.getName();
+	    String q;
+	    if (query == null || query.isEmpty()) {
+	    	q = "";
+	    } else {
+	    	q = query;
+	    }
+	    model.addAttribute("query", query);
 	    model.addAttribute("isAdmin", SignedUser.getUser(name).isVip());
 		model.addAttribute("username", name);
 		return HOME_VIEW;

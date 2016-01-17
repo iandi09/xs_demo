@@ -7,10 +7,9 @@
 
 	<http auto-config="true">
 		<intercept-url pattern="/home" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/add_user" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/user_add" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/user_list" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/user_edit" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/user_edit?*" access="hasRole('ROLE_ADMIN')" />
 		<form-login login-page="/login" 
 					login-processing-url="/j_spring_security_check"
 					default-target-url="/home" 

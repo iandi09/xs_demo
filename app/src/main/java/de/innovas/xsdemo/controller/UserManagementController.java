@@ -19,7 +19,9 @@ import de.innovas.xsdemo.management.User;
 @Controller
 public class UserManagementController {
 		
-	static private final String URL_ADD_USER = "/add_user";
+	static private final String URL_HOME = "/home";
+	
+	static private final String URL_ADD_USER = "/user_add";
 	static private final String USER_VIEW = "user";
 
 	static private final String URL_USER_LIST = "/user_list";
@@ -33,7 +35,7 @@ public class UserManagementController {
 		UserCommand userCommand = new UserCommand();
 		Authentication auth = getAuthentication();
 	    String name = auth.getName();
-	    setPageParams(model, "user_add", name);
+	    setPageParams(model, name);
 	    userCommand.setNewUser(true);
 		model.addAttribute("userCommand", userCommand);
 		return USER_VIEW;
@@ -52,7 +54,7 @@ public class UserManagementController {
 	    } else if (currentUser.isVip()){
 	    	user = SignedUser.getUser(username);
 	    } else {
-	    	return "redirect:" + "/home";
+	    	return "redirect:" + URL_HOME;
 	    }
 	    userCommand.setUsername(user.getUsername());
 	    userCommand.setEmail(user.getEmail());
@@ -60,7 +62,7 @@ public class UserManagementController {
 	    userCommand.setVip(user.isVip());
 	    userCommand.setNewUser(false);
 		model.addAttribute("userCommand", userCommand);
-		setPageParams(model, "user_edit", name);
+		setPageParams(model, name);
 		return USER_VIEW;
 	}
 
@@ -73,24 +75,22 @@ public class UserManagementController {
 		String landingPage;
 		if(userCommand.isNewUser()) {
 			if (!currentUser.isVip()) {
-				return "redirect:" + "/home";
+				return "redirect:" + URL_HOME;
 			}
 			user = new User(userCommand.getUsername(), userCommand.getPassword(), false);
 			user.setVip(userCommand.isVip());
-			landingPage = URL_ADD_USER;
 		} else {
 			user = SignedUser.getUser(userCommand.getUsername());
 			if (currentUser.isVip()) {
 				user.setVip(userCommand.isVip());
 			}
-			landingPage = URL_EDIT_USER;
 		}
 		user.setEmail(userCommand.getEmail());
 		user.setInfo(userCommand.getInfo());
 		if (userCommand.isNewUser()) {
 			SignedUser.addUser(user);
 		}
-		return "redirect:" + landingPage;
+		return "redirect:" + URL_HOME;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = URL_USER_LIST)
@@ -98,7 +98,7 @@ public class UserManagementController {
 		List<User> userList = SignedUser.getUsers();
 		Authentication auth = getAuthentication();
 	    String name = auth.getName();
-	    setPageParams(model, "user_list", name);
+	    setPageParams(model, name);
 		model.addAttribute("userList", userList);
 		return USER_LIST_VIEW;
 	}
@@ -107,9 +107,8 @@ public class UserManagementController {
 		return SecurityContextHolder.getContext().getAuthentication();
 	}
 	
-	private void setPageParams(Model model, String currentPage, String currentUser) {
+	private void setPageParams(Model model, String currentUser) {
 		model.addAttribute("isAdmin", SignedUser.getUser(currentUser).isVip());
-	    model.addAttribute("page", currentPage);
 	    model.addAttribute("username", currentUser);
 	}
 }
