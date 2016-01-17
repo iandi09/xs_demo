@@ -54,5 +54,8 @@ public class UserCommand {
 	public void setNewUser(boolean newUser) {
 		this.newUser = newUser;
 	}
+	public String toString(){
+		return username;
+	}
 	
 }

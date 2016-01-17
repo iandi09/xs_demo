@@ -10,10 +10,12 @@ public class SignedUser {
 		private static final long serialVersionUID = 2699412997359059987L;
 
 		{
-			User user = new User("admin", "admin", true);
-			user.setEmail("admin@xsdemo.de");
-			put("admin", user);
-			put("user", new User("user", "user", false));
+			User admin = new User("admin", "admin", true);
+			admin.setEmail("admin@xsdemo.de");
+			put("admin", admin);
+			User user = new User("user", "user", false);
+			user.setEmail("user@web.de");
+			put("user", user);
 		}
 	};
 

@@ -33,6 +33,9 @@
 					<c:otherwise>Nein</c:otherwise>
 					</c:choose>
 				</td>
+				<c:if test="${isAdmin}">
+				<td style="width:20px;"><a href="/user_edit?user=${user.username}"><img src="/static/images/edit.png"/></a></td>
+				</c:if>
 			</tr>
 			</c:forEach>
 		</tbody>

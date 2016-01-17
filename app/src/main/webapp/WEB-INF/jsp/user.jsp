@@ -3,18 +3,6 @@
 
 <jsp:include page="/WEB-INF/jsp/general/header.jsp" />
 
-<script>
-
-function submitUser(newUser){
-	var hidden = $("<input type='checkbox' name='newUser' value='" + newUser + "'/>");
-	var hidden2 = $("<input type='hidden' value='on' name='_newUser'/>");
-	$(userForm).append(hidden);
-	$(userForm).append(hidden2);
-	$(userForm).submit();
-}
-
-</script>
-
 <c:choose>
 	<c:when test="${page == 'user_add'}">
 		<c:set var="title" value="Neuer Benutzer" />
@@ -30,26 +18,28 @@ function submitUser(newUser){
 	<form:form id="userForm" class="form-signin" commandName="userCommand" method="post">
 		<h2 class="form-signin-heading">${title}</h2>
 		
-		<form:input path="username" type="text" class="form-control" placeholder="Benutzername"/>
+		<form:input path="username" type="text" class="form-control" placeholder="Benutzername" readonly="${!userCommand.newUser}"/>
 		
 		<form:input path="password" type="password" class="form-control" placeholder="Passwort"/>
 		
 		<form:input path="password2" type="password" class="form-control" placeholder="Passwort wiederholen"/>
 		
-		<form:input path="email" type="email" class="form-control" placeholder="E-Mail"/>
+		<form:input path="email" type="email" class="form-control" placeholder="E-Mail" required="true"/>
 		
 		<form:input path="info" type="text" class="form-control" placeholder="Zusatzinfo"/>
 			
-		<div class="checkbox">
+		<div class="checkbox" <c:if test="${!isAdmin}">style="display:none"</c:if>>
 			<label>
 				<form:checkbox path="vip"/>Admin
 			</label>	
 		</div>
 		
-		<button class="btn btn-lg btn-primary btn-block" onclick="javascript:submitUser(${page == 'user_add'})">
+		<button class="btn btn-lg btn-primary btn-block">
 			${button}
 		</button>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		
+		<form:hidden path="newUser"/>
 	</form:form>
 </div>
 

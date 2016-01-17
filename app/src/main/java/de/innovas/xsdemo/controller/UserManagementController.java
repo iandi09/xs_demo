@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import de.innovas.xsdemo.command.UserCommand;
 import de.innovas.xsdemo.management.SignedUser;
@@ -26,46 +27,70 @@ public class UserManagementController {
 	
 	static private final String URL_EDIT_USER = "/user_edit";
 
+	
 	@RequestMapping(method = RequestMethod.GET, value = URL_ADD_USER)
 	public String showUserForm(Model model, HttpSession session) {
 		UserCommand userCommand = new UserCommand();
 		Authentication auth = getAuthentication();
 	    String name = auth.getName();
 	    setPageParams(model, "user_add", name);
+	    userCommand.setNewUser(true);
 		model.addAttribute("userCommand", userCommand);
+		return USER_VIEW;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = URL_EDIT_USER)
+	public String showUserEditForm(Model model, @RequestParam(value="user", required=false) String username) {
+		UserCommand userCommand = new UserCommand();
+		Authentication auth = getAuthentication();
+	    String name = auth.getName();
+	    User currentUser = SignedUser.getUser(name);
+	    User user;
+	    
+	    if (username == null || username.isEmpty()) {
+	    	user = currentUser;
+	    } else if (currentUser.isVip()){
+	    	user = SignedUser.getUser(username);
+	    } else {
+	    	return "redirect:" + "/home";
+	    }
+	    userCommand.setUsername(user.getUsername());
+	    userCommand.setEmail(user.getEmail());
+	    userCommand.setInfo(user.getInfo());
+	    userCommand.setVip(user.isVip());
+	    userCommand.setNewUser(false);
+		model.addAttribute("userCommand", userCommand);
+		setPageParams(model, "user_edit", name);
 		return USER_VIEW;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = {URL_ADD_USER, URL_EDIT_USER})
 	public String editUser(Model model, UserCommand userCommand) {
+		Authentication auth = getAuthentication();
+	    String name = auth.getName();
+		User currentUser = SignedUser.getUser(name);
 		User user;
+		String landingPage;
 		if(userCommand.isNewUser()) {
+			if (!currentUser.isVip()) {
+				return "redirect:" + "/home";
+			}
 			user = new User(userCommand.getUsername(), userCommand.getPassword(), false);
+			user.setVip(userCommand.isVip());
+			landingPage = URL_ADD_USER;
 		} else {
-			Authentication auth = getAuthentication();
-		    String name = auth.getName();
-			user = SignedUser.getUser(name);
+			user = SignedUser.getUser(userCommand.getUsername());
+			if (currentUser.isVip()) {
+				user.setVip(userCommand.isVip());
+			}
+			landingPage = URL_EDIT_USER;
 		}
 		user.setEmail(userCommand.getEmail());
 		user.setInfo(userCommand.getInfo());
-		user.setVip(userCommand.isVip());
-		SignedUser.addUser(user);
-		return "redirect:" + USER_LIST_VIEW;
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = URL_EDIT_USER)
-	public String showUserEditForm(Model model) {
-		UserCommand userCommand = new UserCommand();
-		Authentication auth = getAuthentication();
-	    String name = auth.getName();
-	    setPageParams(model, "user_edit", name);
-	    User user = SignedUser.getUser(name);
-	    userCommand.setUsername(name);
-	    userCommand.setEmail(user.getEmail());
-	    userCommand.setInfo(user.getInfo());
-	    userCommand.setVip(user.isVip());
-		model.addAttribute("userCommand", userCommand);
-		return USER_VIEW;
+		if (userCommand.isNewUser()) {
+			SignedUser.addUser(user);
+		}
+		return "redirect:" + landingPage;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = URL_USER_LIST)

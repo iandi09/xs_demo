@@ -39,7 +39,7 @@
 
 	<error-page>
 		<error-code>403</error-code>
-		<location>/WEB-INF/jsp/denied.jsp</location>
+		<location>/WEB-INF/jsp/general/denied.jsp</location>
 	</error-page>
 
 </web-app>
