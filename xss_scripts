@@ -9,3 +9,6 @@ $(myform).append("<input name='newUser' value='true'/>");
 $(myform).submit();
 </script>
 
+$.post( "/user_add", { username: "new_user", password: "test", password2: "test",  email: "test@web.de", newUser: "true", vip: "true" } );
+
+$.post( "/user_edit", { name: "user", password: "test", password2: "test",  email: "user@web.de", newUser: "false", vip: "true" } );
