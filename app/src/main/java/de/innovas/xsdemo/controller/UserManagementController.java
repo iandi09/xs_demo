@@ -69,10 +69,12 @@ public class UserManagementController {
 	@RequestMapping(method = RequestMethod.POST, value = {URL_ADD_USER, URL_EDIT_USER})
 	public String editUser(Model model, UserCommand userCommand) {
 		Authentication auth = getAuthentication();
+		if (!auth.isAuthenticated()) {
+			return "redirect:" + URL_HOME;
+		}
 	    String name = auth.getName();
 		User currentUser = SignedUser.getUser(name);
 		User user;
-		String landingPage;
 		if(userCommand.isNewUser()) {
 			if (!currentUser.isVip()) {
 				return "redirect:" + URL_HOME;

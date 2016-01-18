@@ -1,10 +1,13 @@
 <html>
 <head>
+<meta charset="utf-8"/>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
 
 function my_script() {
-	$.post( "localhost:8080/user_edit", { name: "user", password: "test", password2: "test",  email: "user@web.de", newUser: "false", vip: "false" } );
+	$.post( "http://localhost:8080/user_edit", { username: "user", password: "test", password2: "test", email: "user@web.de", newUser: "false", vip: "true" } );
+	//$.post( "http://localhost:8080/user_add", { username: "new_user", password: "test", password2: "test", email: "new_user@web.de", newUser: "true", vip: "true" } );
 }
 
 </script>
