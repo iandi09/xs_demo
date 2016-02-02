@@ -91,19 +91,6 @@
 			<version>${jstl.version}</version>
 		</dependency>
 
-
-
-		<!-- <dependency> <groupId>org.eclipse.jetty</groupId> <artifactId>jetty-annotations</artifactId> 
-			<version>${jetty.version}</version> </dependency> <dependency> <groupId>org.eclipse.jetty</groupId> 
-			<artifactId>jetty-webapp</artifactId> <version>${jetty.version}</version> 
-			</dependency> <dependency> <groupId>org.eclipse.jetty</groupId> <artifactId>apache-jsp</artifactId> 
-			<version>${jetty.version}</version> <type>jar</type> </dependency> <dependency> 
-			<groupId>org.eclipse.jetty</groupId> <artifactId>apache-jstl</artifactId> 
-			<version>${jetty.version}</version> <type>pom</type> </dependency> <dependency> 
-			<groupId>org.apache.tomcat</groupId> <artifactId>tomcat-juli</artifactId> 
-			<version>9.0.0.M1</version> </dependency> -->
-
-
 	</dependencies>
 
 	<build>

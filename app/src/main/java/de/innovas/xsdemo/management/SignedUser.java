@@ -16,6 +16,12 @@ public class SignedUser {
 			User user = new User("user", "user", false);
 			user.setEmail("user@web.de");
 			put("user", user);
+			User user2 = new User("user2", "user2", false);
+			user2.setEmail("user2@gmx.de");
+			put("user2", user2);
+			User user3 = new User("user3", "user3", false);
+			user3.setEmail("user3@hotmail.com");
+			put("user3", user3);
 		}
 	};
 
