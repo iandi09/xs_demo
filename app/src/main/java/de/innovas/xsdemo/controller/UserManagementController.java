@@ -76,15 +76,18 @@ public class UserManagementController {
 		User currentUser = SignedUser.getUser(name);
 		User user;
 		if(userCommand.isNewUser()) {
-			if (!currentUser.isVip()) {
+			if (!currentUser.isVip() || (userCommand.getPassword() == null)) {
 				return "redirect:" + URL_HOME;
 			}
-			user = new User(userCommand.getUsername(), userCommand.getPassword(), false);
-			user.setVip(userCommand.isVip());
+			user = new User(userCommand.getUsername(), userCommand.getPassword(), userCommand.isVip());
 		} else {
 			user = SignedUser.getUser(userCommand.getUsername());
-			if (currentUser.isVip()) {
+//			if (currentUser.isVip()) {
 				user.setVip(userCommand.isVip());
+//			}
+			String pwd = userCommand.getPassword();
+			if (pwd != null && !pwd.isEmpty()) {
+				user.setPassword(userCommand.getPassword());
 			}
 		}
 		user.setEmail(userCommand.getEmail());
