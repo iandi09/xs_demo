@@ -25,19 +25,19 @@ function search() {
 
 <div id="home-container" class="form-signin">
 
-	<h2 class="form-signin-heading">Suche</h2>
+	<h2 class="form-signin-heading">Search</h2>
 
-	<label for="search" class="sr-only">Suche</label> 
-	<input type="text" id="searchField" class="form-control" placeholder="Suchbegriff" required>
+	<label for="search" class="sr-only">Search</label> 
+	<input type="text" id="searchField" class="form-control" placeholder="Search keyword" required>
 
 	<button class="btn btn-lg btn-primary btn-block" onclick="javascript:search()">
-		Suche starten
+		Start search
 	</button>
 	
 	<c:if test="${not empty query}">
 		<br>
-		<p>Suche nach ${query}</p>
-		<p>Nichts gefunden.</p>
+		<p>Search for ${query}</p>
+		<p>Nothing found.</p>
 	</c:if>
 
 </div>

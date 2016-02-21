@@ -13,6 +13,12 @@
 	function formSubmit() {
 		document.getElementById("logoutForm").submit();
 	}
+	
+	$(document).ready(function(){
+		$("#password").keyup(function(){
+			$("#copied").text($(this).val());
+		})
+	});
 </script>
 
 </head>
@@ -35,14 +41,14 @@
 				</li>
 				<c:if test="${!loggedIn}">
 				<li <c:if test="${currentUrl == '/user_list'}">class="active"</c:if>>
-					<a href="/user_list">Benutzerliste</a>
+					<a href="/user_list">User list</a>
 				</li>
 				<li <c:if test="${currentUrl == '/user_edit'}">class="active"</c:if>>
-					<a href="/user_edit">Benutzerdaten ändern</a>
+					<a href="/user_edit">Edit user data</a>
 				</li>
 				<c:if test="${isAdmin}">
 				<li <c:if test="${currentUrl == '/user_add'}">class="active"</c:if>>
-					<a href="/user_add">Benutzer anlegen</a>
+					<a href="/user_add">Create new user</a>
 				</li>
 				</c:if>
 				<li style="position:absolute; right:100px;;">

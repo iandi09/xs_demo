@@ -2,15 +2,16 @@
 
 <div class="container">
 	<form class="form-signin" action="/j_spring_security_check" method="post">
-		<h2 class="form-signin-heading">Bitte einloggen</h2>
+		<h2 class="form-signin-heading">Please login</h2>
 		
 		<label for="inputUsername" class="sr-only">Benutzername</label> 
 		<input type="text" id="inputUsername" class="form-control" name="username"
-			placeholder="Benutzername" required autofocus> 
+			placeholder="User name" required autofocus> 
 			
-		<label for="inputPassword" class="sr-only">Passwort</label> 
-		<input type="password" id="inputPassword" class="form-control" name="password"
-			placeholder="Passwort" required>
+		<label for="password" class="sr-only">Passwort</label> 
+		Cleartext: <p id="copied" style="display: inline;"></p>
+		<input type="password" id="password" class="form-control" name="password"
+			placeholder="Password" required>
 			
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			Signin

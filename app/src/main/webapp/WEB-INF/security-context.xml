@@ -17,7 +17,7 @@
 					username-parameter="username" 
 					password-parameter="password" />
 		<logout logout-url="/j_spring_security_logout" logout-success-url="/login?logout" />
-		<csrf disabled="true"/>
+		<csrf disabled="false"/>
 
 	</http>
 
@@ -29,21 +29,4 @@
   
     <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>  
     
-	<!--
-	<beans:bean id="authenticationProvider" class="de.innovas.xsdemo.security.UserDetailsServiceImpl"/>
-	
-	<authentication-manager>
-        <authentication-provider user-service-ref="authenticationProvider"/>
-    </authentication-manager>
-   
-
-	<authentication-manager>
-		<authentication-provider>
-			<user-service>
-				<user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
-        		<user name="user" password="user" authorities="ROLE_USER" />
-			</user-service>
-		</authentication-provider>
-	</authentication-manager>
- -->
 </beans:beans>

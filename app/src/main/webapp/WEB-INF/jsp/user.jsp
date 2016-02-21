@@ -7,12 +7,12 @@
 
 <c:choose>
 	<c:when test="${currentUrl == '/user_add'}">
-		<c:set var="title" value="Neuer Benutzer" />
-		<c:set var="button" value="Anlegen" />
+		<c:set var="title" value="New user" />
+		<c:set var="button" value="Create user" />
 	</c:when>
 	<c:otherwise>
-		<c:set var="title" value="Benutzer ändern" />
-		<c:set var="button" value="Speichern" />
+		<c:set var="title" value="Edit user" />
+		<c:set var="button" value="Save" />
 	</c:otherwise>
 </c:choose>
 
@@ -20,15 +20,16 @@
 	<form:form id="userForm" class="form-signin" commandName="userCommand" method="post">
 		<h2 class="form-signin-heading">${title}</h2>
 		
-		<form:input path="username" type="text" class="form-control" placeholder="Benutzername" readonly="${!userCommand.newUser}"/>
+		<form:input path="username" type="text" class="form-control" placeholder="User name" readonly="${!userCommand.newUser}"/>
 		
-		<form:input path="password" type="password" class="form-control" placeholder="Passwort"/>
+		Cleartext: <p id="copied" style="display: inline;"></p>
+		<form:input path="password" type="password" class="form-control" placeholder="Password"/> 
 		
-		<form:input path="password2" type="password" class="form-control" placeholder="Passwort wiederholen"/>
+		<form:input path="password2" type="password" class="form-control" placeholder="Repeat password"/>
 		
 		<form:input path="email" type="email" class="form-control" placeholder="E-Mail" required="true"/>
 		
-		<form:input path="info" type="text" class="form-control" placeholder="Zusatzinfo"/>
+		<form:input path="info" type="text" class="form-control" placeholder="Additional info"/>
 			
 		<div class="checkbox" <c:if test="${!isAdmin}">style="display:none"</c:if>>
 			<label>

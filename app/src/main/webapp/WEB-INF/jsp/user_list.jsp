@@ -15,9 +15,9 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Benutzername</th>
+				<th>User name</th>
 				<th>E-Mail</th>
-				<th>Zusatzinfo</th>
+				<th>Additional info</th>
 				<th>Admin</th>
 			</tr>
 		</thead>
@@ -29,8 +29,8 @@
 				<td>${user.info}</td>
 				<td>
 					<c:choose>
-						<c:when test="${user.vip}">Ja</c:when>
-					<c:otherwise>Nein</c:otherwise>
+						<c:when test="${user.vip}">Yes</c:when>
+					<c:otherwise>No</c:otherwise>
 					</c:choose>
 				</td>
 				<c:if test="${isAdmin}">
