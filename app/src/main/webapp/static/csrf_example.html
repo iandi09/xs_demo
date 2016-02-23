@@ -4,18 +4,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
-
 function my_script() {
 	$.post( "http://localhost:8080/user_edit", { username: "user", password: "test", password2: "test", email: "user@web.de", newUser: "false", vip: "true" } );
 }
-
 </script>
 
 </head>
 
 <body>
 
-<img src="/static/images/opossum.jpg" onload="my_script()"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Opossum_1.jpg/1920px-Opossum_1.jpg" style="width: 500px" 
+	onload="my_script()"/>
 
 </body>
 </html>
